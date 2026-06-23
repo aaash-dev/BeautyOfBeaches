@@ -26,6 +26,7 @@ const teamMembers = [
 
 // ── Download helpers ────────────────────────────────────────────────────────
 // Build export files for viewer consumption so users can save the guide offline.
+// The PDF generator builds a branded document in the browser, avoiding a separate backend service.
 function downloadPDF() {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const W = doc.internal.pageSize.getWidth();

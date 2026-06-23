@@ -252,6 +252,7 @@ export function BeachZones() {
 
   // ── Tab hover styling ──
   // Highlight non-active zone buttons on hover without affecting the active zone state.
+  // The effect depends on activeZone so hover classes are recalculated when the selection changes.
   useEffect(() => {
     // jQuery: zone tab hover colour flash
     $(".zone-tab")
