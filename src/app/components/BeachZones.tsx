@@ -200,6 +200,8 @@ const zonesData = {
 type ZoneKey = keyof typeof zonesData;
 const ZONES: ZoneKey[] = ["NORTH", "SOUTH", "WEST", "EAST"];
 
+// ── Beach rating utility ──
+// Render small star ratings for each beach card and detail panel.
 function StarRating({ rating }: { rating: number }) {
   return (
     <span className="flex items-center gap-1">
@@ -226,9 +228,11 @@ export function BeachZones() {
   const [activeBeachId, setActiveBeachId] = useState<string>("n1");
 
   const zone = zonesData[activeZone];
+  // Fallback to the first beach in the zone if the currently selected beach id is missing.
   const beach = zone.beaches.find((b) => b.id === activeBeachId) ?? zone.beaches[0];
 
-  // Reset selected beach when zone changes
+  // ── Zone selection logic ──
+  // Switch the active region and reset the selected beach for the newly chosen zone.
   function switchZone(z: ZoneKey) {
     // jQuery: fade out content, switch, fade in
     $("#zone-detail").fadeOut(180, () => {
@@ -239,12 +243,15 @@ export function BeachZones() {
   }
 
   function switchBeach(id: string) {
+    // Animate the beach detail panel when the user chooses a different beach within the same zone.
     $("#beach-card").fadeOut(150, () => {
       setActiveBeachId(id);
       setTimeout(() => $("#beach-card").fadeIn(200), 0);
     });
   }
 
+  // ── Tab hover styling ──
+  // Highlight non-active zone buttons on hover without affecting the active zone state.
   useEffect(() => {
     // jQuery: zone tab hover colour flash
     $(".zone-tab")

@@ -15,10 +15,12 @@ const categories = ["All", "Ocean", "Biodiversity", "Waves", "Sand", "Health", "
 export function BeachFacts() {
   const [activeCategory, setActiveCategory] = useState("All");
 
+  // Filter facts by the selected category without mutating the original dataset.
   const filtered = activeCategory === "All"
     ? beachFactsJSON
     : beachFactsJSON.filter((f) => f.category === activeCategory);
 
+  // Animate stat values each time the category changes to reinforce the content update.
   useEffect(() => {
     $(".stat-number").css("opacity", 0).animate({ opacity: 1 }, 500);
   }, [activeCategory]);

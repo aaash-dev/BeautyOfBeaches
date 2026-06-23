@@ -5,6 +5,8 @@ interface BeachLogoProps {
 }
 
 export function BeachLogo({ size = 28, textColor = "#fff", accentColor = "#C9A96E" }: BeachLogoProps) {
+  // ── Brand mark ──
+  // Render the composable logo used across the sitemap and page branding.
   return (
     <div className="flex items-center gap-2.5 select-none">
       {/* SVG mark */}

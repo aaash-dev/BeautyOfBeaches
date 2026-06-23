@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import $ from "jquery";
 
+// Restrict transport mode values to the supported tab options.
+// This ensures the mode state can only select data present in transportData.
 type TransportMode = "flights" | "buses";
 
 // JSON data for transport
@@ -35,6 +37,7 @@ const transportData: Record<TransportMode, {
   ],
 };
 
+// Map zone keys to accent colors used throughout the transport cards and badges.
 const ZONE_COLORS: Record<string, string> = {
   NORTH: "#4A90D9",
   SOUTH: "#F59E0B",
@@ -45,6 +48,8 @@ const ZONE_COLORS: Record<string, string> = {
 export function BeachTransport() {
   const [mode, setMode] = useState<TransportMode>("flights");
 
+  // ── Mode switch animation ──
+  // Reflow the current transport cards with fade and hover animation whenever the selected mode changes.
   useEffect(() => {
     // jQuery: fade in cards on tab switch
     $(".transport-card").hide().each(function (i) {
@@ -62,6 +67,7 @@ export function BeachTransport() {
   }, [mode]);
 
   function switchMode(m: TransportMode) {
+    // Animate the grid out before switching the transport mode to make the tab change feel smoother.
     $("#transport-grid").fadeOut(160, () => {
       setMode(m);
       setTimeout(() => $("#transport-grid").fadeIn(220), 0);

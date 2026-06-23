@@ -11,8 +11,11 @@ const galleryImages = [
 ];
 
 export function BeachGallery() {
+  // Track the currently selected image for the lightbox overlay.
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
+  // ── Hover overlays only on pointer devices ──
+  // Desktop users get hover fade effects while touch users see static overlays.
   useEffect(() => {
     if (window.matchMedia("(hover: hover)").matches) {
       $(".gallery-img-wrap")
@@ -21,6 +24,8 @@ export function BeachGallery() {
     }
   }, []);
 
+  // ── Keyboard accessibility ──
+  // Close the open lightbox with Escape while it is active.
   useEffect(() => {
     if (!lightbox) return;
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };

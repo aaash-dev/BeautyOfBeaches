@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import $ from "jquery";
 
 function useLiveClock() {
+  // ── Live clock hook ──
+  // Keep the ticker time updated every second.
   const [time, setTime] = useState(new Date());
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 1000);
@@ -61,6 +63,8 @@ export function BeachTicker() {
     { icon: "🐚", label: "Fact",     value: "No two waves are exactly alike — just like you." },
   ];
 
+  // ── Hover interaction ──
+  // Pause the scrolling ticker on desktop hover so users can read the live items clearly.
   useEffect(() => {
     // jQuery: pause ticker on hover
     $("#ticker-bar")

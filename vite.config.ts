@@ -18,15 +18,16 @@ function figmaAssetResolver() {
 
 export default defineConfig({
   plugins: [
+    // Resolve custom Figma asset imports like figma:asset/filename to the local asset folder.
     figmaAssetResolver(),
-    // The React and Tailwind plugins are both required for Make, even if
-    // Tailwind is not being actively used – do not remove them
+    // React plugin provides JSX and HMR support for the SPA.
+    // Tailwind plugin is kept as part of the build chain to support the configured utility CSS setup.
     react(),
     tailwindcss(),
   ],
   resolve: {
     alias: {
-      // Alias @ to the src directory
+      // Alias @ to the src directory to simplify imports across the app.
       '@': path.resolve(__dirname, './src'),
     },
   },

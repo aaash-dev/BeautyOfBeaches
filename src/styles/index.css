@@ -1,3 +1,4 @@
+/* Global stylesheet entry point: compose font, Tailwind, and theme definitions in the app bundle. */
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';

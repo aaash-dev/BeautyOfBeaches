@@ -3,8 +3,11 @@ import $ from "jquery";
 
 export function BeachContact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  // Controls whether the contact panel shows the form or the success confirmation message.
   const [sent, setSent] = useState(false);
 
+  // ── Form interaction polish ──
+  // Highlight inputs on focus using jQuery so the contact form feels more tactile.
   useEffect(() => {
     $(".beach-input")
       .on("focus", function () { $(this).css("border-color", "var(--ocean-500)"); })
@@ -13,6 +16,7 @@ export function BeachContact() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // Animate button feedback and then transition UI to the sent confirmation state.
     $("#contact-btn").animate({ opacity: 0 }, 200, function () {
       setSent(true);
       $("#contact-btn").animate({ opacity: 1 }, 300);

@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import $ from "jquery";
 
 export function BeachHero() {
+  // ── Animated hero messaging ──
+  // Cycle through a set of hero phrases with a typing effect to keep the landing section engaging.
+  // This effect is intentionally simple and persistent because the hero section remains mounted for the app lifespan.
   useEffect(() => {
     const phrases = [
       "Where the waves meet the soul.",

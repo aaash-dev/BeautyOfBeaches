@@ -67,6 +67,8 @@ const sitemapData = [
 
 export function BeachSitemap() {
   useEffect(() => {
+    // ── Visual sitemap polish ──
+    // Give the section nodes hover feedback and staggered fade-in for a more dynamic navigation overview.
     // jQuery: node hover glow
     $(".sitemap-node")
       .on("mouseenter", function () {
@@ -84,6 +86,7 @@ export function BeachSitemap() {
     return () => { $(".sitemap-node").off("mouseenter mouseleave"); };
   }, []);
 
+  // Smooth scroll to section anchors, keeping the header offset consistent.
   const scrollTo = (id: string) => {
     const el = $(`#${id}`);
     if (el.length) $("html, body").animate({ scrollTop: el.offset()!.top - 70 }, 600, "swing");

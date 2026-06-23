@@ -6,11 +6,11 @@ const ORG = {
   name: "BeautyOfBeaches Digital",
   tagline: "Bringing the world's finest shores to your screen",
   email: "info@beautyofbeaches.com",
-  phone: "+1 (305) 555-0199",
-  address: "123 Ocean Drive, Coastal Hub,\nMiami, FL 33101, USA",
+  phone: "+974 4444 3600",
+  address: "123 Ocean Drive, Coastal Hub,\nDoha, D Ring Rd, Qatar",
   website: "www.beautyofbeaches.com",
-  founded: "2022",
-  team: "12 passionate beach explorers",
+  founded: "2026",
+  team: "A team of passionate beach explorers",
   mission:
     "Our mission is to inspire travellers worldwide by curating authentic, in-depth information about the planet's most stunning beaches — organised by zone, culture, and season — so every visitor can plan their perfect coastal escape.",
   vision:
@@ -18,14 +18,14 @@ const ORG = {
 };
 
 const teamMembers = [
-  { name: "Alex Monroe",    role: "Founder & CEO",        emoji: "👔" },
-  { name: "Priya Sharma",   role: "Head of Content",      emoji: "✍️" },
-  { name: "Luca Ferretti",  role: "Lead Developer",       emoji: "💻" },
-  { name: "Aisha Kamara",   role: "UX / Design Lead",     emoji: "🎨" },
+  { name: "Mohammad Hamza",    role: "Founder & CEO",        emoji: "👔" },
+  { name: "Kyrsten Arceno",   role: "Head of Content",      emoji: "✍️" },
+  { name: "Aya Afifi",  role: "Lead Developer",       emoji: "💻" },
+  { name: "Somaia Abdalla",   role: "UX / Design Lead",     emoji: "🎨" },
 ];
 
 // ── Download helpers ────────────────────────────────────────────────────────
-
+// Build export files for viewer consumption so users can save the guide offline.
 function downloadPDF() {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const W = doc.internal.pageSize.getWidth();
@@ -111,6 +111,8 @@ function downloadPDF() {
   doc.save("BeautyOfBeaches.pdf");
 }
 
+// Generate a Word-compatible HTML document with the same brand content.
+// The exported DOC is actually HTML wrapped in Word document namespaces so it opens cleanly in Word.
 function downloadDOC() {
   const html = `
 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -184,6 +186,9 @@ function downloadDOC() {
 // ── Component ───────────────────────────────────────────────────────────────
 
 export function BeachAbout() {
+  // ── Interactive page polish ──
+  // Bind hover and press states using jQuery for the contact cards and download buttons.
+  // This maintains the presentational animation without changing component state.
   useEffect(() => {
     // jQuery: hover glow on contact cards
     $(".contact-card")

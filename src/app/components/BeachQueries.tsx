@@ -17,6 +17,8 @@ export function BeachQueries() {
   const [queryForm, setQueryForm] = useState({ name: "", email: "", question: "" });
   const [querySent, setQuerySent] = useState(false);
 
+  // ── FAQ accordion logic ──
+  // Manage one expanded FAQ item at a time and animate its answer pane.
   function toggleFaq(id: number) {
     if (openId === id) {
       // jQuery: slide up
@@ -35,6 +37,8 @@ export function BeachQueries() {
     setTimeout(() => setQuerySent(false), 3500);
   }
 
+  // ── FAQ hover styling ──
+  // Apply subtle border highlights when hovering FAQ cards for desktop polish.
   useEffect(() => {
     // jQuery: FAQ item hover highlight
     $(".faq-item")

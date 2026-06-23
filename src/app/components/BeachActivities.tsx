@@ -11,6 +11,8 @@ const activitiesData = [
 ];
 
 export function BeachActivities() {
+  // ── Desktop hover styling ──
+  // Add elevation effects for pointer users while preserving touch behavior on mobile.
   useEffect(() => {
     // jQuery: card hover lift — only on non-touch devices
     if (window.matchMedia("(hover: hover)").matches) {

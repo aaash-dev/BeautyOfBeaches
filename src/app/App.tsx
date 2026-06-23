@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import $ from "jquery";
+import $ from "jquery"; // jQuery powers the legacy scroll/animation helpers that are integrated with the React page shell.
 import { BeachHero }      from "./components/BeachHero";
 import { BeachZones }     from "./components/BeachZones";
 import { BeachActivities} from "./components/BeachActivities";
@@ -18,6 +18,7 @@ import { BeachLogo }      from "./components/BeachLogo";
 /* MARKER-MAKE-KIT-DISCOVERY-READ */
 
 // ── Nav structure ────────────────────────────────────────────────────────────
+// Grouped section links support both desktop nav and the mobile menu while keeping dropdowns aligned.
 const PRIMARY_LINKS = [
   { label: "Home",       href: "#hero"       },
   { label: "Zones",      href: "#zones"      },
@@ -52,6 +53,9 @@ export default function App() {
   const exploreRef = useRef<HTMLDivElement>(null);
   const infoRef    = useRef<HTMLDivElement>(null);
 
+  // ── Visitor analytics ──────────────────────────────────────────────────────
+  // Persist a lightweight page view count locally so the logo area can display visit engagement.
+  // The lazy initializer ensures localStorage is read only once on mount.
   const [visitors] = useState(() => {
     const prev = parseInt(localStorage.getItem("bob_visitors") ?? "0", 10);
     const next  = prev + 1;
@@ -60,6 +64,7 @@ export default function App() {
   });
 
   // ── Smooth scroll ──────────────────────────────────────────────────────────
+  // Override anchor navigation to keep section scrolling consistent and to collapse mobile/dropdown menus.
   useEffect(() => {
     $(document).on("click", "a.nav-link", function (e) {
       e.preventDefault();
@@ -71,17 +76,20 @@ export default function App() {
       if (mobileOpen) $("#mobile-menu").fadeOut(220, () => setMobileOpen(false));
     });
     return () => { $(document).off("click", "a.nav-link"); };
+  // mobileOpen is intentionally included so the cleanup behavior matches the current menu state.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mobileOpen]);
 
   // ── Scroll tracking ────────────────────────────────────────────────────────
   useEffect(() => {
+    // Apply a sticky nav style once the user scrolls past the hero section.
     $(window).on("scroll.navbar", () => {
       $(window).scrollTop()! > 60
         ? $("#main-nav").addClass("nav-scrolled")
         : $("#main-nav").removeClass("nav-scrolled");
     });
 
+    // Track the current section for active nav highlighting based on scroll position.
     $(window).on("scroll.active", () => {
       const scrollY = $(window).scrollTop()! + 120;
       let current = "hero";
@@ -92,14 +100,14 @@ export default function App() {
       setActiveSection(current);
     });
 
-    // IntersectionObserver: fade sections
+    // Fade in page sections as they enter the viewport; this is kept separate from the scroll-active logic.
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) $(e.target).addClass("visible"); }),
       { threshold: 0.08 }
     );
     $(".fade-section").each(function () { observer.observe(this); });
 
-    // Wave dots
+    // Decorative wave dots animate on a repeating interval so the page feels alive.
     const waveInterval = setInterval(() => {
       $(".wave-dot").each(function (i) {
         setTimeout(() => {
@@ -119,6 +127,7 @@ export default function App() {
 
   // ── Click-outside: close dropdowns ────────────────────────────────────────
   useEffect(() => {
+    // Close open dropdowns when a user clicks outside the menu containers.
     function handler(e: MouseEvent) {
       if (exploreRef.current && !exploreRef.current.contains(e.target as Node)) setExploreOpen(false);
       if (infoRef.current    && !infoRef.current.contains(e.target as Node))    setInfoOpen(false);
@@ -129,6 +138,7 @@ export default function App() {
 
   // ── Mobile toggle ──────────────────────────────────────────────────────────
   const toggleMobile = () => {
+    // Animate the mobile menu in and out while keeping state in sync.
     if (!mobileOpen) {
       setMobileOpen(true);
       setTimeout(() => $("#mobile-menu").hide().fadeIn(260), 0);
@@ -139,6 +149,7 @@ export default function App() {
 
   // ── Dropdown toggle helpers ────────────────────────────────────────────────
   const toggleExplore = () => {
+    // Only one dropdown should be open at a time and transitions should feel responsive.
     if (!exploreOpen) {
       setInfoOpen(false);
       setExploreOpen(true);
@@ -148,6 +159,7 @@ export default function App() {
     }
   };
   const toggleInfo = () => {
+    // Ensure the alternate dropdown closes when Info is opened.
     if (!infoOpen) {
       setExploreOpen(false);
       setInfoOpen(true);
@@ -157,6 +169,7 @@ export default function App() {
     }
   };
 
+  // Determine whether a section group contains the current active page section.
   const isActive = (hrefs: string[]) => hrefs.includes(`#${activeSection}`);
 
   return (
@@ -366,8 +379,8 @@ export default function App() {
               { heading: "Info",     links: DROPDOWN_INFO                                          },
               { heading: "Contact",  links: [
                   { label:"📧 info@beautyofbeaches.com", href:"mailto:info@beautyofbeaches.com" },
-                  { label:"📞 +1 (305) 555-0199",        href:"tel:+13055550199"                },
-                  { label:"📍 Miami, FL 33101, USA",      href:"#about"                          },
+                  { label:"📞 +974 4444 3600",        href:"tel:+97444443600"                },
+                  { label:"📍 Doha, D Ring Rd, Qatar",      href:"#about"                          },
               ]},
             ].map(({ heading, links }) => (
               <div key={heading}>
@@ -400,7 +413,7 @@ export default function App() {
               <BeachLogo size={22} textColor="rgba(255,255,255,0.45)" accentColor="#C9A96E" />
             </div>
             <div className="flex items-center gap-1">
-              <span className="wave-dot" /><span className="wave-dot" /><span className="wave-dot" />
+              <span className="text-xs" style={{ color:"rgba(255,255,255,0.3)" }}>Explore · Discover · Escape</span>
             </div>
             <span className="text-xs" style={{ color:"rgba(255,255,255,0.3)" }}>Built with ❤️ for beach lovers worldwide</span>
           </div>

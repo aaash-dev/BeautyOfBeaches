@@ -54,10 +54,14 @@ export function BeachFeedback() {
   const [submitted, setSubmitted] = useState(false);
   const [entries, setEntries] = useState<FeedbackEntry[]>(sampleFeedback);
 
+  // Live aggregate score based on all five feedback aspects.
+  // This derived score is used for both the visual summary and the form submission payload.
   const overallRating = Math.round(
     Object.values(ratings).reduce((a, b) => a + b, 0) / ASPECTS.length
   );
 
+  // ── Initial UI animation ──
+  // Fade in review cards after the section mounts to give the reviews a polished entrance.
   useEffect(() => {
     // jQuery: animate review cards in on mount
     $(".review-card").hide().each(function (i) {
@@ -65,6 +69,8 @@ export function BeachFeedback() {
     });
   }, []);
 
+  // ── Feedback submission ──
+  // Build a new review entry and provide instant response feedback while resetting the form state.
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (overallRating === 0) return;
